@@ -1,0 +1,8 @@
+
+name: GraphQL Examples
+type: module
+description: 'Decoupled Drupal 8 with GraphQL'
+package: GraphQL
+core: 8.x
+dependencies:
+- graphql_core

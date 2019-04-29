@@ -16,23 +16,27 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   id = "blog_tag",
  *   label = @Translation("Blog Tag"),
  *   base_table = "blog_tag",
+ *   admin_permission = "administer graphql test entities",
  *   entity_keys={
  *      "id" = "id",
  *   },
  * )
  */
-class BlogTag extends ContentEntityBase implements ContentEntityInterface {
+class BlogTagEntity extends ContentEntityBase implements ContentEntityInterface {
 
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type
+  ) {
     $fields['id'] = BaseFieldDefinition::create('integer')
                                        ->setLabel(t('ID'))
                                        ->setDescription(t('The ID of Tag'))
                                        ->setReadOnly(TRUE);
 
     $fields['tag'] = BaseFieldDefinition::create('string')
-                                            ->setlabel(t('tag'))
-                                            ->setRequired(TRUE)
-                                            ->setdescription(t('the content of Tag'));
+                                        ->setlabel(t('tag'))
+                                        ->setRequired(TRUE)
+                                        ->setDescription(t('the content of Tag'))
+                                        ->setDefaultValue('')
+                                        ->addConstraint('UniqueTag', []);
 
 
     $fields['created_at'] = BaseFieldDefinition::create('created')

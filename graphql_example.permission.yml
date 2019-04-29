@@ -1,0 +1,4 @@
+administer graphql test entities:
+  title: 'Administer all graphql test entities'
+  description: 'Allow to access the administration graphql test entities.'
+  restrict access: true

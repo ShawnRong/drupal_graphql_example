@@ -16,6 +16,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   id = "blog",
  *   label = @Translation("Blog"),
  *   base_table = "blog",
+ *   admin_permission = "administer graphql test entities",
  *   entity_keys={
  *      "id" = "id",
  *   },
@@ -23,16 +24,22 @@ use Drupal\Core\Field\BaseFieldDefinition;
  */
 class Blog extends ContentEntityBase implements ContentEntityInterface {
 
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type
+  ) {
     $fields['id'] = BaseFieldDefinition::create('integer')
                                        ->setLabel(t('ID'))
                                        ->setDescription(t('The ID of Blog'))
                                        ->setReadOnly(TRUE);
 
+    $fields['title'] = BaseFieldDefinition::create('string')
+                                          ->setLabel(t('title'))
+                                          ->setRequired(TRUE)
+                                          ->setDescription(t('the title of Blog'));
+
     $fields['content'] = BaseFieldDefinition::create('string')
-                                            ->setlabel(t('content'))
+                                            ->setLabel(t('content'))
                                             ->setRequired(TRUE)
-                                            ->setdescription(t('the content of Blog'));
+                                            ->setDescription(t('the content of Blog'));
 
     $fields['tags'] = BaseFieldDefinition::create('entity_reference')
                                          ->setSetting('target_type', 'blog_tag')

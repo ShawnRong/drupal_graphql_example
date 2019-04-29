@@ -16,6 +16,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   id = "blog_comment",
  *   label = @Translation("Blog Comment"),
  *   base_table = "blog_comment",
+ *   admin_permission = "administer graphql test entities",
  *   entity_keys={
  *      "id" = "id",
  *   },

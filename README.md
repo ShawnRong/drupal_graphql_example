@@ -1,6 +1,7 @@
 # Decoupled Drupal with GraphQL example
+[Drupal org doc](https://www.drupal.org/docs/8/modules/graphql)
 ## Install
-### Required Intall
+### Required Install
 - [graphql-php](https://github.com/webonyx/graphql-php)
 - [GraphQL Module](https://www.drupal.org/project/graphql)
 
@@ -17,3 +18,38 @@ composer require webonyx/graphql-php
 ## GraphQL
 ### Example module integrate queries
 
+```
+# query tag
+query {
+	blogTagQuery {
+    entities {
+      entityId
+      ... on BlogTag {
+        tag
+        createdAt
+      }
+    }
+  }
+}
+```
+
+```
+# create tag
+mutation {
+  createTag(input: {
+    tag: "test_tag1"
+  }) {
+    entity {
+      ... on BlogTag {
+        id
+        tag
+        createdAt
+      }
+    }
+    violations{
+      message
+      code
+    }
+  }
+}
+```

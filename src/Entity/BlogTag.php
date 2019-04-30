@@ -22,7 +22,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   },
  * )
  */
-class BlogTagEntity extends ContentEntityBase implements ContentEntityInterface {
+class BlogTag extends ContentEntityBase implements ContentEntityInterface {
 
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type
   ) {

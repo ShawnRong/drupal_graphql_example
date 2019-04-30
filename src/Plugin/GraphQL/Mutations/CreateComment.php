@@ -17,54 +17,37 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class CreateBlog
+ * Class CreateComment
  *
  * @package Drupal\graphql_example\Plugin\GraphQL\Mutations
  * @GraphQLMutation(
- *   id = "create_blog",
- *   description = "Create blog.",
- *   entity_type = "blog",
+ *   id = "create_comment",
+ *   description = "Create blog comment.",
+ *   entity_type = "blog_comment",
  *   secure = true,
- *   name = "createBlog",
+ *   name = "createComment",
  *   type = "EntityCrudOutput!",
- *   arguments =
- *   {
- *     "input" = "BlogInput!"
+ *   arguments = {
+ *     "input" = "CommentInput!"
  *   }
  * )
  */
-class CreateBlog extends MutationPluginBase implements ContainerFactoryPluginInterface {
+class CreateComment extends MutationPluginBase implements ContainerFactoryPluginInterface {
 
   use DependencySerializationTrait;
   use StringTranslationTrait;
   use EntityHelperTrait;
 
-  /**
-   * CreateBlog constructor.
-   *
-   * @param array $configuration
-   * @param string $pluginId
-   * @param \Drupal\graphql_example\Plugin\GraphQL\Mutations\mixed $pluginDefinition
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManger
-   */
   public function __construct(
     array $configuration,
     $pluginId,
     $pluginDefinition,
-    EntityTypeManagerInterface $entityTypeManger
+    EntityTypeManagerInterface $entityTypeManager
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
-    $this->entityTypeManager = $entityTypeManger;
+    $this->entityTypeManager = $entityTypeManager;
   }
 
-  /**
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   * @param array $configuration
-   * @param string $pluginId
-   * @param mixed $pluginDefinition
-   *
-   * @return \Drupal\Core\Plugin\ContainerFactoryPluginInterface|\Drupal\graphql_example\Plugin\GraphQL\Mutations\CreateBlog
-   */
   public static function create(
     ContainerInterface $container,
     array $configuration,
@@ -79,27 +62,23 @@ class CreateBlog extends MutationPluginBase implements ContainerFactoryPluginInt
     );
   }
 
-
-  public function resolve(
-    $value,
-    array $args,
-    ResolveContext $context,
-    ResolveInfo $info
-  ) {
+  public function resolve($value, array $args, ResolveContext $context, ResolveInfo $info)  {
     $userId = $args['input']['user'];
-    $tags = $args['input']['tags'];
+    $blogId = $args['input']['blog'];
 
+    //Add a trait check entity if exist
     // Check if user exists
-    if($validate = $this->entityIsExist('user', $userId))  {
+    if($validate = $this->entityIsExist('user', $userId)) {
       return $validate;
     }
 
-    // Tags validate
-    if($validate = $this->entitiesIsExist('blog_tag', $tags))  {
+    // Check if blog exists
+    if($validate = $this->entityIsExist('blog', $blogId)) {
       return $validate;
     }
 
-    $entity  = $this->entityCreate('blog', $args['input']);
+    $entity = $this->entityCreate('blog_comment', $args['input']);
+
 
     // Validate the entity values.
     if (($violations = $entity->validate()) && $violations->count()) {
@@ -110,7 +89,6 @@ class CreateBlog extends MutationPluginBase implements ContainerFactoryPluginInt
       return new EntityCrudOutputWrapper($entity);
     }
     return NULL;
-
   }
 
 }

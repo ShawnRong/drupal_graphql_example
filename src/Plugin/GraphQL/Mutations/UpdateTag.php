@@ -8,7 +8,6 @@ use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\graphql\Annotation\GraphQLMutation;
 use Drupal\graphql\GraphQL\Execution\ResolveContext;
 use Drupal\graphql\Plugin\GraphQL\Mutations\MutationPluginBase;
 use Drupal\graphql_core\GraphQL\EntityCrudOutputWrapper;
@@ -17,24 +16,23 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class CreateBlog
+ * Class UpdateTag
  *
  * @package Drupal\graphql_example\Plugin\GraphQL\Mutations
  * @GraphQLMutation(
- *   id = "create_blog",
- *   description = "Create blog.",
- *   entity_type = "blog",
- *   secure = true,
- *   name = "createBlog",
- *   type = "EntityCrudOutput!",
- *   arguments =
- *   {
- *     "input" = "BlogInput!"
- *   }
+ *  id = "update_tag",
+ *  description= "Update tag.",
+ *  entity_type = "blog_tag",
+ *  secure = true,
+ *  name = "updateTag",
+ *  type = "EntityCrudOutput!",
+ *  arguments = {
+ *    "tag_id" = "Integer!",
+ *    "input" = "TagInput!"
+ *  }
  * )
  */
-class CreateBlog extends MutationPluginBase implements ContainerFactoryPluginInterface {
-
+class UpdateTag extends MutationPluginBase implements ContainerFactoryPluginInterface {
   use DependencySerializationTrait;
   use StringTranslationTrait;
   use EntityHelperTrait;
@@ -86,27 +84,22 @@ class CreateBlog extends MutationPluginBase implements ContainerFactoryPluginInt
     ResolveContext $context,
     ResolveInfo $info
   ) {
-    $userId = $args['input']['user'];
-    $tags = $args['input']['tags'];
+    $tagId = $args['tag_id'];
 
-    // Check if user exists
-    if($validate = $this->entityIsExist('user', $userId))  {
+    // Check if tag exists
+    if($validate = $this->entityIsExist('blog_tag', $tagId)) {
       return $validate;
     }
 
-    // Tags validate
-    if($validate = $this->entitiesIsExist('blog_tag', $tags))  {
-      return $validate;
-    }
-
-    $entity  = $this->entityCreate('blog', $args['input']);
+    $entity = $this->entityTypeManager->getStorage('blog_tag')->load($tagId);
+    $entity->tag->value = $args['input']['tag'] ?? $entity->tag->value;
 
     // Validate the entity values.
     if (($violations = $entity->validate()) && $violations->count()) {
       return new EntityCrudOutputWrapper(NULL, $violations);
     }
 
-    if (($status = $entity->save()) && $status === SAVED_NEW) {
+    if (($status = $entity->save()) && $status === SAVED_UPDATED) {
       return new EntityCrudOutputWrapper($entity);
     }
     return NULL;

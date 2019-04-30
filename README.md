@@ -34,6 +34,31 @@ query {
 ```
 
 ```
+# create blog
+mutation {
+  createBlog(input: {
+    title: "GraphQLTest",
+    content: "GraphQLTest Content",
+    user: 1,
+    tags: [1]
+  }) {
+    violations {
+      code
+      message
+    }
+    entity {
+      ... on Blog {
+        id
+        title
+        createdAt
+      }
+    }
+    errors
+  }
+}
+```
+
+```
 # create tag
 mutation {
   createTag(input: {
@@ -49,6 +74,58 @@ mutation {
     violations{
       message
       code
+    }
+  }
+}
+```
+
+```angular2
+mutation {
+  createComment(input: {
+    content: "commenttest",
+    user: 1,
+    blog: 3
+  }) {
+    errors
+    violations{
+      code
+      message
+    }
+    entity {
+      ... on BlogComment {
+        content
+        createdAt
+        user {
+        	entity {
+            ... on User {
+              uid
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+``` updateblog
+mutation {
+  updateBlog(blog_id: 4, input: {
+    title: "update title"
+    tags: [3]
+  }) {
+    errors
+    violations {
+      message
+      code
+    }
+    entity {
+      ... on Blog {
+        id
+        title
+        content
+      }
     }
   }
 }

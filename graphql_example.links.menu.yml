@@ -1,0 +1,6 @@
+# Define default links for this module.
+graphql_example.entity_example_page:
+  title: Graphql example react page
+  description: Graphql example react page
+  route_name: graphql_example.entity_example_page
+  expanded: TRUE

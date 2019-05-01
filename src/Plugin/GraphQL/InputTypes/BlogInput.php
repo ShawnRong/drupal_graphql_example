@@ -5,7 +5,6 @@ namespace Drupal\graphql_example\Plugin\GraphQL\InputTypes;
 
 
 use Drupal\graphql\Annotation\GraphQLInputType;
-use Drupal\graphql\Annotation\GraphQLType;
 use Drupal\graphql\Plugin\GraphQL\InputTypes\InputTypePluginBase;
 
 

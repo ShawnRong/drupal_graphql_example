@@ -1,0 +1,7 @@
+graphql_example.library:
+  version: 1.x
+  css:
+    theme:
+      assets/build/css/main.css: {}
+  js:
+    assets/build/js/main.js: {}

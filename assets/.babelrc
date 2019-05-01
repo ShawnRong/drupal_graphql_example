@@ -1,0 +1,15 @@
+{
+  "presets": [
+    [ "@babel/preset-env", {
+      "targets": {
+        "esmodules": true
+      },
+      "useBuiltIns" : "usage"
+    }],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "react-hot-loader/babel"
+  ]
+}

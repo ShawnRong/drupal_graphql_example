@@ -1,11 +1,12 @@
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const commonPaths = require('./paths');
 
 module.exports = {
     mode: 'development',
     output: {
-        filename: '[name].js',
+        filename: `${commonPaths.jsFolder}/[name].js`,
         path: commonPaths.outputPath,
         chunkFilename: '[name].js',
     },
@@ -36,5 +37,10 @@ module.exports = {
         compress: true,
         hot: true,
     },
-    plugins: [new webpack.HotModuleReplacementPlugin()],
+    plugins: [new webpack.HotModuleReplacementPlugin(),
+      new MiniCssExtractPlugin({
+        filename: `${commonPaths.cssFolder}/[name].css`,
+        chunkFilename: '[id].css',
+      }),
+    ],
 };

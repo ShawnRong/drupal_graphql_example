@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --open",
+    "dev": "cross-env NODE_ENV=development webpack --watch --progress",
     "build": "cross-env NODE_ENV=production webpack",
     "format": "prettier --write 'src/**/*.jsx'",
     "precommit": "lint-staged"
@@ -19,7 +20,13 @@
     ]
   },
   "dependencies": {
+    "apollo-boost": "^0.3.1",
+    "apollo-client": "^2.5.1",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
     "react": "^16.8.4",
+    "react-apollo": "^2.5.5",
+    "react-apollo-hooks": "^0.4.5",
     "react-dom": "^16.8.4",
     "react-hot-loader": "^4.8.0"
   },

@@ -130,3 +130,17 @@ mutation {
   }
 }
 ```
+
+```angular2
+mutation {
+  createTodo(description: "123") {
+    entity {
+      ... on NodeTodo {
+        entityId
+        title
+        created
+      }
+    }
+  }
+}
+```

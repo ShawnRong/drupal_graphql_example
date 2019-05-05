@@ -2,6 +2,5 @@ graphql_example.entity_example_page:
   path: '/graphql-example/entity-example'
   defaults:
     _controller: '\Drupal\graphql_example\Controller\EntityPage::description'
-    _title: 'Graphql example react page'
   requirements:
     _permission: 'TRUE'

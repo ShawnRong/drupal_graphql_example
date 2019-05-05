@@ -1,11 +1,7 @@
 import React from "react";
-import { hot } from "react-hot-loader";
 import "./App.scss";
+import Todo from "./component/Todo";
 
-const App = () => (
-  <div>
-    <h1>React App</h1>
-  </div>
-);
+const App = () => <Todo />;
 
-export default hot(module)(App);
+export default App;

@@ -1,8 +1,11 @@
 import gql from 'graphql-tag'
 
 export default gql`
-{
-  nodeQuery {
+query TodoList($activeStatus: [String]){
+  nodeQuery(filter:{conditions: {
+    field: "field_active",
+    value: $activeStatus
+  }}) {
     count
     entities {
       ... on NodeTodo {

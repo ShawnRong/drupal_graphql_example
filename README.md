@@ -9,7 +9,14 @@
 composer require webonyx/graphql-php
 ```
 
-### Conditional Install
+### React assets compile
+
+``` shell
+  yarn
+  yarn build
+```
+
+### Optional Install
 
 - [graphql-metatag](https://www.drupal.org/project/graphql_metatag)
 - [graphql-views](https://www.drupal.org/project/graphql_views)
@@ -17,130 +24,5 @@ composer require webonyx/graphql-php
 
 ## GraphQL
 ### Example module integrate queries
-
-```
-# query tag
-query {
-	blogTagQuery {
-    entities {
-      entityId
-      ... on BlogTag {
-        tag
-        createdAt
-      }
-    }
-  }
-}
-```
-
-```
-# create blog
-mutation {
-  createBlog(input: {
-    title: "GraphQLTest",
-    content: "GraphQLTest Content",
-    user: 1,
-    tags: [1]
-  }) {
-    violations {
-      code
-      message
-    }
-    entity {
-      ... on Blog {
-        id
-        title
-        createdAt
-      }
-    }
-    errors
-  }
-}
-```
-
-```
-# create tag
-mutation {
-  createTag(input: {
-    tag: "test_tag1"
-  }) {
-    entity {
-      ... on BlogTag {
-        id
-        tag
-        createdAt
-      }
-    }
-    violations{
-      message
-      code
-    }
-  }
-}
-```
-
-```angular2
-mutation {
-  createComment(input: {
-    content: "commenttest",
-    user: 1,
-    blog: 3
-  }) {
-    errors
-    violations{
-      code
-      message
-    }
-    entity {
-      ... on BlogComment {
-        content
-        createdAt
-        user {
-        	entity {
-            ... on User {
-              uid
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-``` updateblog
-mutation {
-  updateBlog(blog_id: 4, input: {
-    title: "update title"
-    tags: [3]
-  }) {
-    errors
-    violations {
-      message
-      code
-    }
-    entity {
-      ... on Blog {
-        id
-        title
-        content
-      }
-    }
-  }
-}
-```
-
-```angular2
-mutation {
-  createTodo(description: "123") {
-    entity {
-      ... on NodeTodo {
-        entityId
-        title
-        created
-      }
-    }
-  }
-}
-```
+[Drupal Query Example](./doc/drupal_query_example.md)
+[Drupal Custom Entity Operation Example](./doc/custom_operation_example.md)

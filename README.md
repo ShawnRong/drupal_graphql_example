@@ -24,5 +24,7 @@ composer require webonyx/graphql-php
 
 ## GraphQL
 ### Example module integrate queries
+
 [Drupal Query Example](./doc/drupal_query_example.md)
+
 [Drupal Custom Entity Operation Example](./doc/custom_operation_example.md)
